@@ -1,0 +1,44 @@
+<script src="../vue.js/vue.js"></script>
+    <style>
+        .title{
+            width: 90px;
+            height: 30px;
+            background-color: yellow;
+            border: 1px solid #ccc;
+            float: left;
+        }
+        .inner{
+            width: 275px;
+            height: 100px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- item:数组项   index:索引 -->
+        <div :class="title1" v-for="(item,index) in list" @click="btn(index)">{{item.tab}}</div>
+        <div :class="inner1" v-for="(item,index) in list" :style="item.bg" v-if="item.show">{{item.content}}</div>
+    </div>
+    <script>
+        let vm  = new Vue({
+            el:'#app',
+            data:{
+                title1:"title",
+                inner1:"inner",
+                list:[
+                    {tab:'选项卡一',content:'内容一',show:true,bg:{background:'green',fontSize:'30px'}},
+                    {tab:'选项卡二',content:'内容二',show:false,bg:{background:'pink',fontSize:'50px'}},
+                    {tab:'选项卡三',content:'内容三',show:false,bg:{background:'orange',fontSize:'20px'}},
+                ],         
+            },
+            methods:{
+                btn(index){
+                    for(let i=0;i<this.list.length;i++){
+                        this.list[i].show = false;//把所有的show样式改为false
+                    }
+                    this.list[index].show = true;//点击的当前的下标改为true
+                }
+            },
+        })
+    </script>
