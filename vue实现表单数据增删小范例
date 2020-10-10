@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-clock>
+        <h2>添加学员</h2>
+        <span>姓名：</span>
+        <input type="text" v-model="name">
+        <br>
+        <span>年龄：</span>
+        <input type="text" v-model="age">
+        <br>
+        <button @click="add">添加</button>
+        <button @click="reset">重置</button>
+        <h2>信息表</h2>
+        <table border="1" cellpadding="0" cellspacing='0' style="border-collapse: collapse; width: 500px;">
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(item,index) in arr">
+                <td>{{index+1}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td><button @click="del">删除</button></td>
+            </tr>
+            <tr v-if="arr.length>0">
+                <td colspan="4">
+                    <button @click="delAll">全部删除</button>
+                </td>
+            </tr>
+            <tr v-else="">
+                <td colspan="4">暂无数据</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:'#app',
+            data:{
+                name:'',
+                age:'',
+                arr:[
+                    {
+                        id:1,
+                        name:'张三',
+                        age:18,
+                    },
+                    {
+                        id:2,
+                        name:'李四',
+                        age:17,
+                    },
+                ]
+            },
+            methods:{          
+                // 添加
+                add(){
+                    this.arr.push({
+                        name:this.name,
+                        age:this.age
+                    })
+                    this.reset()//添加完后重置
+                },
+                // 重置
+                reset(){
+                    this.name='',
+                    this.age=''
+                },
+                // 删除一个
+                del(index){
+                    this.arr.splice(index,1)
+                },
+                // 全部删除
+                delAll(){
+                    this.arr=[];
+                }
+            },
+        })
+    </script>
+</body>
+</html>
